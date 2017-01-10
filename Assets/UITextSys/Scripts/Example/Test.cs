@@ -17,7 +17,33 @@ public class Test : MonoBehaviour {
     {
         UITextSys.Instance.Init();
 
-        UITextSys.Instance.ShowText(101);
+        //TestGetText();
+        //TestShowText();
+        TestShowDialog();
 	}
 	
+    /// <summary>
+    /// 测试通过id获取字符串
+    /// </summary>
+    void TestGetText()
+    {
+        string msg = UITextSys.Instance.GetText(101);
+        Debug.Log(msg);
+    }
+
+    /// <summary>
+    /// 测试通过id显示tips
+    /// </summary>
+    void TestShowText()
+    {
+        UITextSys.Instance.ShowText(101);
+    }
+
+    /// <summary>
+    /// 测试显示确定取消框
+    /// </summary>
+    void TestShowDialog()
+    {
+        UITextSys.Instance.ShowDialog(101, new Dialog(DialogType.twobutton).SureCallback(null, true));
+    }
 }

@@ -422,7 +422,7 @@ namespace GameKit.UITextSys
                         return null;
                     }
 
-                    GameObject curObject = Instantiate(RES_UIDialog);
+                    GameObject curObject = Instantiate(res);
                     if (curObject == null)
                     {
                         Debug.LogError("Not Find Resource , Path: " + resPath);
