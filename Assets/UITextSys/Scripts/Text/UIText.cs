@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace UITextSys
+namespace GameKit.UITextSys
 {
     public class UIText : MonoBehaviour
     {
@@ -29,7 +29,7 @@ namespace UITextSys
         {
             if (mContent == null || mContent == "")
                 return;
-            Init();
+            Init(UIGlobal.SCREEN_WIDTH,UIGlobal.SCREEN_HEIGHT);
         }
 
         /// <summary>
@@ -195,24 +195,11 @@ namespace UITextSys
 
         public void myMoveToy(GameObject obj, float y, bool islocal, string completeFun, GameObject completeObj)
         {
-            iTween iT = obj.GetComponent<iTween>();
-            if (null != iT)
-            {
-
-            }
             iTween.MoveTo(obj, iTween.Hash("easeType", iTween.EaseType.linear, "time", 1f, "y", y, "islocal", islocal, "oncomplete", completeFun, "oncompletetarget", completeObj));
-
         }
 
         public void myFadeTo(bool bCallback = false)
         {
-            //TweenAlpha tweenAlpha = TweenAlpha.Begin(gameObject, 1f, 0f);
-            //////tweenALpha.from = 1f;
-            //////tweenALpha.to = 0f;
-            ////tweenAlpha.gameObject.GetComponent<UIWidget>().alpha = 1f;
-            //tweenAlpha.eventReceiver = gameObject;
-            //tweenAlpha.callWhenFinished = "OnTweenAlphaDone";
-            //Debug.LogError("myFadeTo");
             if (gameObject.activeSelf == false)
             {
                 //Debug.LogError("myFadeTo gameObject.activeSelf == false");

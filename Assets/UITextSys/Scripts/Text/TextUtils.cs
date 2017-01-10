@@ -10,9 +10,10 @@ public class TextUtils
     /* 函数说明：打开一个xml配置文件*/
     public static XmlDocument OpenXml(string fileName)
     {
-        string configPath = Application.persistentDataPath + "/Config/" + fileName;
+        string configPath = Application.dataPath +fileName;
         if (File.Exists(configPath) == false)
         {
+            Debug.LogError("File is not exists, path: " + configPath);
             return null;
         }
 

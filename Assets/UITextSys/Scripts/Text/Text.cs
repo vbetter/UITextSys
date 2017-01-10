@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Xml;
 
-namespace UITextSys
+namespace GameKit.UITextSys
 {
     public class Text
     {

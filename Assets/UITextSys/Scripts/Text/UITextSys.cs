@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace UITextSys
+namespace GameKit.UITextSys
 {
 
     public class UITextSys : MonoBehaviour
     {
 
+        public static readonly string UITextPathPreFix = "UIPrefabs/UIText/";   //预设路径前缀
+
         [SerializeField]
         GameObject RES_UIDialog;        //实例资源
-
-        float 
 
         // Use this for initialization
         /// <summary>
@@ -65,28 +65,13 @@ namespace UITextSys
                     m_Instance = GameObject.FindObjectOfType(typeof(UITextSys)) as UITextSys;
                     if (m_Instance == null)
                     {
-                        GameObject res = Instantiate(Resources.Load("")) as GameObject;
+                        GameObject res = Instantiate(Resources.Load(UITextPathPreFix + "UITextSys")) as GameObject;
                         m_Instance = res.GetComponent<UITextSys>();
-                        m_Instance.Init();
                     }
 
                 }
                 return m_Instance;
             }
-        }
-
-
-        void Start()
-        {
-
-
-        }
-
-        void Awake()
-        {
-            mInstance = this;
-            TextReader.Init();
-            mbFrist = true;
         }
 
         /// <summary>
@@ -428,9 +413,21 @@ namespace UITextSys
                         _dialog = new Dialog();
                     curText.Content = UIText.ReplaceStringByValue(curText.Content, curText.Args);
                     _dialog.Text = curText.Content;
+
+                    string resPath = UITextPathPreFix + "UIDialog";
+                    GameObject res = Resources.Load<GameObject>(resPath) as GameObject;
+                    if (res == null)
+                    {
+                        Debug.LogError("Not Find Resource , Path: " + resPath);
+                        return null;
+                    }
+
                     GameObject curObject = Instantiate(RES_UIDialog);
                     if (curObject == null)
+                    {
+                        Debug.LogError("Not Find Resource , Path: " + resPath);
                         return null;
+                    }
                     ////curPrefab
                     if (mUItext == null)
                         return null;
@@ -459,12 +456,26 @@ namespace UITextSys
         {
             if (_text == null)
                 return;
-            GameObject curObject = ResManager.Instance.AddPrefab("Assets/Package/UI/UIPrefab/Text/UIText" + _text.Type + ".prefab", mUItext.gameObject);
+            string resPath = UITextPathPreFix + "UIText" + _text.Type.ToString();
+            GameObject res = Resources.Load<GameObject>(resPath) as GameObject;
+            if(res == null)
+            {
+                Debug.LogError("Not Find Resource , Path: " + resPath);
+                return;
+            }
+
+            GameObject curObject = Instantiate(res) as GameObject;
             if (curObject == null)
+            {
+                Debug.LogError("Not Find Resource , Path: " + resPath);
                 return;
-            ////curPrefab
+            }
+            
             if (mUItext == null)
+            {
+                Debug.LogError("mUItext is null !");
                 return;
+            }
 
             curObject.SetActive(true);
             UIText textHandler = curObject.GetComponent<UIText>();
@@ -475,60 +486,6 @@ namespace UITextSys
             textHandler.OnShow();
         }
 
-        /// <summary>
-        /// 单个实例
-        /// </summary>
-        public static UITextSys Instance
-        {
-            get
-            {
-                //if (mInstance == null)
-                //{
-                //mUItext = new GameObject("UIText");
-                //mUItext.transform.parent = UI3System.getRootPanle().transform;
-                //mUItext.transform.localPosition = Vector3.zero;
-                //mUItext.transform.localRotation = Quaternion.Euler(Vector3.zero);
-                //mUItext.transform.localScale = Vector3.one;
-                //mUItext.layer = 13;
-                //mUItext.AddComponent<UIPanel>().depth = 100;
-                //mInstance = mUItext.GetComponent<UITextSys>();
-                //GameObject pool = new GameObject("Pool");
-                //pool.transform.localPosition = Vector3.zero;
-                //pool.transform.localRotation = Quaternion.Euler(Vector3.zero);
-                //pool.transform.localScale = Vector3.one;
-                //pool.transform.parent = mUItext.transform;
-                //pool.SetActive(false);
-                //mIDepth = 100;
-                //}
-                return mInstance;
-            }
-        }
-
-        /**
-        public void ShowDialog(GameObject _parentObject,string _strText,params UIDialogButton[] _buttons)
-        {
-            GameObject dialogObjectPrefab = Resources.Load("UIPrefabs/UI/UIDialog") as GameObject;
-            GameObject dialogObject = Instantiate(dialogObjectPrefab) as GameObject;
-            UIDialog dialog = dialogObject.GetComponent<UIDialog>();
-            dialog.SetText(_strText);
-            foreach (UIDialogButton button in _buttons)
-            {
-                dialog.AddButton(button);
-            }
-            //dialog.AddButton(button);
-            if (_parentObject)
-            {
-                dialogObject.transform.parent = _parentObject.transform;
-            }
-            else
-            {
-                dialogObject.transform.parent = mUItext.transform;
-            }
-            dialogObject.gameObject.transform.localPosition = Vector3.zero;
-            dialogObject.gameObject.transform.localScale = Vector3.one;
-            UI3System.setDepth(dialogObject,100);
-        }
-    **/
         public string GetText(int _id, params object[] _args)
         {
             if (_id == null)
@@ -663,7 +620,6 @@ namespace UITextSys
             {
                 GameObject spriteObj = new GameObject("text");
                 UISprite sprite = spriteObj.AddComponent<UISprite>();
-                sprite.atlas = ResManager.Instance.LoadAtlas(ItemSys.GetAtlasPath(wl_res.ResItemType.RES_ITEM_TYPE_GOLD));
                 sprite.spriteName = LabelSpriteList[i].text;
                 sprite.depth = chatMsg.depth + 1;
                 if (height == 0 || width == 0)
@@ -766,10 +722,12 @@ namespace UITextSys
             }
         }
 
-        void Init()
+        public void Init()
         {
+            TextReader.Init();
+            mbFrist = true;
+
             GameObject.DontDestroyOnLoad(gameObject);
-            ReadSignPics.GetSignPicsData();
         }
     }
 }

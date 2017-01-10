@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!--
+id:	文本id
+
+type:显示类型;
+	1 : 冒泡;
+	2 : 弹框;
+	3 : 替换;
+	4 : 转义;
+	5 : 提示;
+	6 ：提示;
+
+content：内容
+	4 ：金币:\jb
+	5 : 钻石:\zs
+-->
+
+<TextList>
+	<!-- 系统预留 -->
+	<Text id = "-1" type = "1" content = "%s"/>
+	<Text id = "-2" type = "2" content = "%s"/>
+	<Text id = "0" type = "2" content = "成功"/>
+	<Text id = "1" type = "1" content = "文本类型1%s"/>
+	<Text id = "2" type = "2" content = "文本类型2%s"/>
+	<Text id = "6" type = "6" content = "文本类型6%s"/>
+	<Text id = "7" type = "7" content = "文本类型7%s"/>
+
+	<Text id = "101" type = "6" content = "系统错误"/>
+	<Text id = "102" type = "6" content = "参数错误"/>
+	<Text id = "103" type = "2" content = "角色尚未登录"/>
+	<Text id = "104" type = "6" content = "材料不足"/>
+	<Text id = "105" type = "6" content = "找不到英雄"/>
+	<Text id = "106" type = "2" content = "金币不足"/>
+	<Text id = "107" type = "2" content = "钻石不足"/>
+	<Text id = "108" type = "6" content = "金币达到上限"/>
+	<Text id = "109" type = "2" content = "名字重复"/>
+	<Text id = "110" type = "2" content = "角色已经在别处登录"/>
+	<Text id = "111" type = "6" content = "体力不足"/>
+	<Text id = "112" type = "6" content = "角色已在其他服务器登录"/>
+	<Text id = "113" type = "6" content = "密码错误"/>
+	<Text id = "114" type = "6" content = "角色等级不足"/>
+	<Text id = "115" type = "6" content = "找不到配置"/>
+	<Text id = "116" type = "6" content = "找不到用户"/>
+	<Text id = "119" type = "6" content = "请求超时"/>
+	<Text id = "120" type = "1" content = "配置错误"/>
+	<Text id = "121" type = "1" content = "名字不能包含特殊字符"/>
+	<Text id = "122" type = "1" content = "英雄星级不足"/>
+	<Text id = "124" type = "6" content = "名字不能为空"/>
+  <Text id = "125" type = "6" content = "[ff0000]本区已经爆满，无法注册，您可前往其他区"/>
+  <Text id = "126" type = "6" content = "您的数据异常，请重新登录或者联系GM!"/>
+  
+  <!--900-1000客户端系统预留-->
+	<Text id = "901" type = "1" content = "网络不给力哦，请点击屏幕重新连接:)"/>
+	<Text id = "902" type = "1" content = "正在拼命连接中..."/>
+	<Text id = "903" type = "1" content = "您的连接闲置过久或者您的账号已在别处登录，请点击屏幕重新登录"/>
+	<Text id = "904" type = "1" content = "正在拼命加载服务器列表..."/>
+	<Text id = "905" type = "2" content = "资源版本较低，需要更新，由于资源包较大，请在wifi环境下下载更新"/>
+	<Text id = "906" type = "1" content = "正在加载..."/>
+  
+</TextList>

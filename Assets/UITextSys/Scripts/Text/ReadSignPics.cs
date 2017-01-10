@@ -23,9 +23,9 @@ public class ReadSignPics
             foreach (XmlNode pNode in pNodeList)
             {
                 SignPicsItem item = new SignPicsItem();
-                item.SelfData.id   = Unity3Tools.XmlReadInt(pNode, "id", 0);
-                item.SelfData.name = Unity3Tools.XmlReadString(pNode, "Name", "");
-                item.SelfData.des  = Unity3Tools.XmlReadString(pNode, "Des", "");
+                item.SelfData.id = UIGlobal.XmlReadInt(pNode, "id", 0);
+                item.SelfData.name = UIGlobal.XmlReadString(pNode, "Name", "");
+                item.SelfData.des = UIGlobal.XmlReadString(pNode, "Des", "");
                 XmlNode pChildNode = pNode.ChildNodes[0];
                 // 开始条件
                 if (pChildNode.Name == "SignPicChilds")
@@ -35,9 +35,9 @@ public class ReadSignPics
                         if (startPNode.Name == "condition")
                         {
                             SignPicsData childData = new SignPicsData();
-                            childData.id = Unity3Tools.XmlReadInt(startPNode, "id", 0);
-                            childData.name = Unity3Tools.XmlReadString(startPNode, "Name", "");
-                            childData.des = Unity3Tools.XmlReadString(startPNode, "Des", "");
+                            childData.id = UIGlobal.XmlReadInt(startPNode, "id", 0);
+                            childData.name = UIGlobal.XmlReadString(startPNode, "Name", "");
+                            childData.des = UIGlobal.XmlReadString(startPNode, "Des", "");
                             item.ChildData.Add(childData);
                         }
                     }

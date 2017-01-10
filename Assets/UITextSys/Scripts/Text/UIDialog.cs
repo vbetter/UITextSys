@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace UITextSys
+namespace GameKit.UITextSys
 {
     public delegate void DialogCallback();
     public delegate void DialogCallback1<T>(T obj);
@@ -52,7 +52,6 @@ namespace UITextSys
         public Dictionary<ButtonType, DialogButton> m_buttons = new Dictionary<ButtonType, DialogButton>();
         public DialogType m_type;
         public uint m_itemid;
-        public wl_res.ResItemType m_itemtype;
         public Dialog()
             : this(DialogType.onebutton)
         {
@@ -103,17 +102,9 @@ namespace UITextSys
             return this;
         }
 
-        public Dialog ItemInfo(uint _id, wl_res.ResItemType _type)
-        {
-            m_itemid = _id;
-            m_itemtype = _type;
-            return this;
-        }
-
         public Dialog ItemInfo(uint _id, uint _type)
         {
             m_itemid = _id;
-            m_itemtype = (wl_res.ResItemType)_type;
             return this;
         }
 
@@ -226,12 +217,11 @@ namespace UITextSys
             if (_dialog == null)
                 _dialog = new Dialog();
             m_dialog = _dialog;
-            //EventDelegate.Add(m_closebutton.onClick, OnClose);
-            //EventDelegate.Add(m_surebutton.onClick, OnClose);
-            //EventDelegate.Add(m_canclebutton.onClick, OnClose);
+
             UIEventListener.Get(m_closebutton.gameObject).onClick = OnClose;
             UIEventListener.Get(m_surebutton.gameObject).onClick = OnSure;
             UIEventListener.Get(m_canclebutton.gameObject).onClick = OnCancle;
+
             m_title.text = m_dialog.Title;
             m_sureLabel.text = m_dialog.Sure;
             m_cancleLabel.text = m_dialog.Cancle;
@@ -262,7 +252,7 @@ namespace UITextSys
             {
                 if (grid != null)
                 {
-                    ItemSys.CreateIcon(new Vector2(100f, 100f), _dialog.m_itemid, _dialog.m_itemtype, grid.gameObject);
+                    //ItemSys.CreateIcon(new Vector2(100f, 100f), _dialog.m_itemid, _dialog.m_itemtype, grid.gameObject);
                     grid.gameObject.SetActive(true);
                 }
             }
@@ -276,10 +266,6 @@ namespace UITextSys
                 button.m_action(gameObject);
             }
 
-            if (button != null && button.m_luaFunction != null)
-            {
-                CallLuaFunction(button.m_luaFunction, _object);
-            }
             UIGlobal.myScaleTo(gameObject, "OnCloseScaleDone", gameObject);
         }
 
@@ -290,10 +276,7 @@ namespace UITextSys
                 return;
             if (button.m_action != null)
                 button.m_action(gameObject);
-            if (button != null && button.m_luaFunction != null)
-            {
-                CallLuaFunction(button.m_luaFunction, _object);
-            }
+
             if (button.close)
                 OnClose(_object);
         }
@@ -305,37 +288,14 @@ namespace UITextSys
                 return;
             if (button.m_action != null)
                 button.m_action(gameObject);
-            if (button != null && button.m_luaFunction != null)
-            {
-                CallLuaFunction(button.m_luaFunction, _object);
-            }
             if (button.close)
                 OnClose(_object);
         }
+
         public void OnCloseScaleDone()
         {
             if (gameObject != null)
                 GameObject.Destroy(gameObject);
         }
-
-        //public void OnClose()
-        //{
-        //}
-
-        public void CallLuaFunction(LuaInterface.LuaFunction _luaFunction, GameObject _go)
-        {
-            /*
-            if (_luaFunction != null && _go != null)
-            {
-                int top = _luaFunction.BeginPCall();
-                System.IntPtr L = _luaFunction.GetLuaState();
-                LuaScriptMgr.Push(L, _go);
-                _luaFunction.PCall(top, 1);
-                _luaFunction.EndPCall(top);
-            }
-            */
-        }
-
-        //
     }
 }

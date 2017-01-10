@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace UITextSys
+namespace GameKit.UITextSys
 {
     /// <summary>
     /// 文本类型
@@ -18,12 +18,13 @@ namespace UITextSys
         TextTip = 6,
         GetType = 7,
     }
+
     /// <summary>
     /// 文本读取
     /// </summary>
     public class TextReader : MonoBehaviour
     {
-
+        public static readonly string TextXMLPath = "/UITextSys/Config/Text.bytes";
         // Use this for initialization
         public static Dictionary<int, Text> mDict = new Dictionary<int, Text>();
         void Start()
@@ -38,14 +39,7 @@ namespace UITextSys
         /// </summary>
         public static void Init()
         {
-            //TextReader.ReadFromXml("Other/Virtual_GameObject");
-            Dictionary<int, Text> retDict = TextReader.ReadFromXml("LocalConfig/Text/Text");
-            ////foreach (Text text in retDict.Values)
-            ////{
-                ////Debuger.Log("text:" + text.Id + "," + text.Type + "," + text.Content);
-            ////}
-            ////Text retText = TextReader.GetTextById("1001");
-            ////Debuger.Log("text:" + retText.Id + "," + retText.Type + "," + retText.Content);
+            Dictionary<int, Text> retDict = TextReader.ReadFromXml(TextXMLPath);
         }
 
         /// <summary>
@@ -56,6 +50,12 @@ namespace UITextSys
         public static Dictionary<int, Text> ReadFromXml(string _path)
         {
             XmlDocument xmlDoc = TextUtils.OpenXml(_path);
+
+            if(xmlDoc == null || xmlDoc.DocumentElement == null)
+            {
+                Debug.LogError("Not Find Resource , Path: " + _path);
+                return null;
+            }
 
             XmlNodeList nodeList = xmlDoc.DocumentElement.ChildNodes;
             Dictionary<int, Text> retDict = new Dictionary<int, Text>();

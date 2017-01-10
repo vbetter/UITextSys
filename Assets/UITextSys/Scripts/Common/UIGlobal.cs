@@ -1,9 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 
 public class UIGlobal
 {
+    public static int SCREEN_HEIGHT = 640;
+    public static int SCREEN_WIDTH = 1136;
+
+
     static public void setParent(GameObject go, GameObject parent, bool updateLayer = false)
     {
         if (go == null || parent == null)
@@ -80,5 +85,105 @@ public class UIGlobal
 		iTween.FadeTo(obj,iTween.Hash("amount",alpha,"time",2f,"easetype", iTween.EaseType.linear, "oncomplete", completeFun, "oncompletetarget", completeObj));
     }
 
+    #region 读取解析XML数据
+    /************************************
+     * 函数说明: 读取一个xml节点的int值
+     * 返 回 值: int 
+     ************************************/
+    public static int XmlReadInt(XmlNode xmlNode, string key, int def)
+    {
+        int result = 0;
+        try
+        {
+            result = def;
+            if (xmlNode != null)
+            {
+                if (xmlNode.Attributes.GetNamedItem(key) != null)
+                {
+                    result = int.Parse(xmlNode.Attributes[key].Value);
+                }
+            }
+        }
+        catch (System.Exception)
+        {
+            result = def;
+        }
+        return result;
+    }
 
+    /************************************
+     * 函数说明: 读取一个xml节点的float值
+     * 返 回 值: float 
+     ************************************/
+    public static float XmlReadFloat(XmlNode xmlNode, string key, float def)
+    {
+        float result = 0f;
+        try
+        {
+            result = def;
+            if (xmlNode != null)
+            {
+                if (xmlNode.Attributes.GetNamedItem(key) != null)
+                {
+                    result = float.Parse(xmlNode.Attributes.GetNamedItem(key).Value);
+                }
+            }
+        }
+        catch (System.Exception)
+        {
+            result = def;
+        }
+        return result;
+    }
+
+    /************************************
+     * 函数说明: 读取一个xml节点的long值
+     * 返 回 值: float 
+     ************************************/
+    public static long XmlReadLong(XmlNode xmlNode, string key, long def)
+    {
+        long result = 0;
+        try
+        {
+            result = def;
+            if (xmlNode != null)
+            {
+                if (xmlNode.Attributes.GetNamedItem(key) != null)
+                {
+                    result = long.Parse(xmlNode.Attributes[key].Value);
+                }
+            }
+        }
+        catch (System.Exception)
+        {
+            result = def;
+        }
+        return result;
+    }
+
+    /************************************
+     * 函数说明: 读取一个xml节点的string值
+     * 返 回 值: string 
+     ************************************/
+    public static string XmlReadString(XmlNode xmlNode, string key, string def)
+    {
+        string result = "";
+        try
+        {
+            result = def;
+            if (xmlNode != null)
+            {
+                if (xmlNode.Attributes.GetNamedItem(key) != null)
+                {
+                    result = xmlNode.Attributes[key].Value;
+                }
+            }
+        }
+        catch (System.Exception)
+        {
+            result = def;
+        }
+        return result;
+    }
+    #endregion
 }
